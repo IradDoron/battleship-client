@@ -1,0 +1,8 @@
+const ACTIONS = {
+	MOUSE_ENTER: 'MOUSE_ENTER',
+    MOUSE_LEAVE: 'MOUSE_LEAVE',
+    CLICK: 'CLICK',
+    HAS_SHIP: 'HAS_SHIP',
+};
+
+export default ACTIONS;
