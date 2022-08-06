@@ -1,11 +1,3 @@
-// import constants
-import ACTIONS from '../constants/ACTIONS';
-import CELL_STATUSES from '../constants/CELL_STATUSES';
-
-// import helpers functions
-import isCouldPositionShip from './isCouldPositionShip';
-import updateLegend from './updateLegend';
-
 function playersDataReducer(state, data) {
 	const { type, payload } = data;
 	const { gameId, player1, player2 } = payload;

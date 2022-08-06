@@ -1,11 +1,11 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
 
 // import contexts
+import GameIdContext from '../../../../contexts/GameIdContext';
+import PlayerIdContext from '../../../../contexts/PlayerIdContext';
 import PlayersDataContext from '../../../../contexts/PlayersDataContext';
 import SocketContext from '../../../../contexts/SocketContext';
-import PlayerIdContext from '../../../../contexts/PlayerIdContext';
-import GameIdContext from '../../../../contexts/GameIdContext';
 
 const StyledLegendCell = styled.div`
 	width: 20px;
@@ -24,7 +24,7 @@ const StyledLegendShip = styled.div`
 const StyledLegend = styled.div``;
 
 function Legend({ boardId }) {
-	const { playersData, dispatchPlayersData } = useContext(PlayersDataContext);
+	const { playersData } = useContext(PlayersDataContext);
 	const { playerId } = useContext(PlayerIdContext);
 	const { gameId } = useContext(GameIdContext);
 	const socket = useContext(SocketContext);

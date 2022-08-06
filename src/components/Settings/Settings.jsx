@@ -1,10 +1,13 @@
-import Icon from '../Icon/Icon';
+import { useContext, useState } from 'react';
+import { animated, useSpring, useTransition } from 'react-spring';
 import styled from 'styled-components';
-import { useSpring, animated, useTransition } from 'react-spring';
-import { useState, useContext } from 'react';
+import Icon from '../Icon/Icon';
 
 import SettingsContext from '../../contexts/SettingsContext';
 import LabelIcon from '../LabelIcon/LabelIcon';
+
+
+import SocketContext from '../../contexts/SocketContext';
 
 const SettingsContainer = styled.div`
 	position: absolute;
@@ -28,6 +31,8 @@ function Settings() {
 	const [isAnimating, setIsAnimating] = useState(false);
 	const { settings, setSettings } = useContext(SettingsContext);
 	const { isMusicOn, isFxSoundsOn, apperenceMode } = settings;
+
+	const { socket } = useContext(SocketContext);
 
 	const props = useSpring({
 		from: {
@@ -72,6 +77,10 @@ function Settings() {
 		});
 	}
 
+	function handleResetRooms() {
+		socket.emit('resetRooms');
+	}
+
 	return (
 		<>
 			<SettingsContainer>
@@ -106,6 +115,7 @@ function Settings() {
 								label={isFxSoundsOn ? 'fx sounds off' : 'fx sounds on'}
 								url={isFxSoundsOn ? './icons/fx-on.svg' : './icons/fx-off.svg'}
 							/>
+							<button onClick={handleResetRooms}>Reset rooms</button>
 						</ToolsContainer>
 					) : null
 				)}

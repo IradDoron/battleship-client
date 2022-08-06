@@ -1,8 +1,8 @@
-import SocketContext from '../../../contexts/SocketContext';
-import PlayerIdContext from '../../../contexts/PlayerIdContext';
 import GameIdContext from '../../../contexts/GameIdContext';
+import PlayerIdContext from '../../../contexts/PlayerIdContext';
+import SocketContext from '../../../contexts/SocketContext';
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function JoinGame({ userName }) {
@@ -12,10 +12,10 @@ function JoinGame({ userName }) {
 
 	const navigate = useNavigate();
 
+	console.log('just printing this for use those variables',playerId, gameId);
+
+
 	function handleJoinGame() {
-		console.log('handleJoinGame');
-		console.log('userName', userName);
-		console.log('gameId', gameId);
 		socket.emit('joinGame', {
 			userName,
 			gameId,
@@ -29,7 +29,6 @@ function JoinGame({ userName }) {
 	}
 
 	useEffect(() => {
-		console.log('gameId', gameId);
 	}, [gameId]);
 	return (
 		<>

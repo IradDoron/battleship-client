@@ -1,9 +1,7 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
-import ACTIONS from '../../../../../constants/ACTIONS';
 import CELL_STATUSES from '../../../../../constants/CELL_STATUSES';
 import GameIdContext from '../../../../../contexts/GameIdContext';
-import LegendContext from '../../../../../contexts/LegendContext';
 import PlayersDataContext from '../../../../../contexts/PlayersDataContext';
 import SocketContext from '../../../../../contexts/SocketContext';
 const CELL_SIZE = 50;
@@ -63,7 +61,7 @@ function Cell({ cellCoords, boardId }) {
 	const bgColor = getCellBgColor(cellStatus);
 	console.log('playersData', playersData);
 
-	function handleClick() {}
+	//function handleClick() {}
 
 	function handleMouseEnter() {
 		socket.emit('mouseEnterCell', {

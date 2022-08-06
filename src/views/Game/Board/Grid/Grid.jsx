@@ -1,10 +1,9 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
 import Cell from './Cell/Cell';
-import { useContext } from 'react';
 
 // import contexts
 import PlayersDataContext from '../../../../contexts/PlayersDataContext';
-import SocketContext from '../../../../contexts/SocketContext';
 
 const StyledGrid = styled.div`
 	display: inline-grid;
@@ -12,7 +11,7 @@ const StyledGrid = styled.div`
 `;
 
 function Grid({ boardId }) {
-	const { playersData, dispatchPlayersData } = useContext(PlayersDataContext);
+	const { playersData } = useContext(PlayersDataContext);
 
 	const gridData = playersData[boardId]?.gridData;
 	const gridSize = gridData?.length;

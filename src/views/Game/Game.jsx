@@ -1,11 +1,9 @@
-import SocketContext from '../../contexts/SocketContext';
-import GridDataContext from '../../contexts/GridDataContext';
+import { useContext } from 'react';
 import PlayersDataContext from '../../contexts/PlayersDataContext';
-import { useContext, useState } from 'react';
 import GameArea from './GameArea/GameArea';
 
 function Game() {
-	const { playersData, dispatchPlayersData } = useContext(PlayersDataContext);
+	const { playersData } = useContext(PlayersDataContext);
 
 	return (
 		<>
