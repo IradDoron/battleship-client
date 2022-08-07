@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
 
-const SOCKET = io('http://localhost:5001');
+const SOCKET = io('https://battleship-server-irad.herokuapp.com/');
 
 export default SOCKET;
