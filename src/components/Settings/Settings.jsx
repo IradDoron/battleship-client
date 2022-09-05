@@ -32,7 +32,7 @@ function Settings() {
 	const { settings, setSettings } = useContext(SettingsContext);
 	const { isMusicOn, isFxSoundsOn, apperenceMode } = settings;
 
-	const { socket } = useContext(SocketContext);
+	const  socket = useContext(SocketContext);
 
 	const props = useSpring({
 		from: {
@@ -78,7 +78,8 @@ function Settings() {
 	}
 
 	function handleResetRooms() {
-		socket.emit('resetRooms');
+		console.log('reset rooms');
+		socket.emit('resetRooms', {});
 	}
 
 	return (

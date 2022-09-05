@@ -1,5 +1,8 @@
 // import contexts
 import GameIdContext from '../../contexts/GameIdContext';
+import IsGameOverContext from '../../contexts/IsGameOverContext';
+import IsGameStartedContext from '../../contexts/IsGameStartedContext';
+import IsPlayerReadyContext from '../../contexts/IsPlayerReadyContext';
 import PlayerIdContext from '../../contexts/PlayerIdContext';
 import PlayersDataContext from '../../contexts/PlayersDataContext';
 import SettingsContext from '../../contexts/SettingsContext';
@@ -29,73 +32,14 @@ function ContextWrapper({ children }) {
 		null
 	);
 
+	const [isPlayer1Ready, setIsPlayer1Ready] = useState(false);
+	const [isPlayer2Ready, setIsPlayer2Ready] = useState(false);
+
+	const [isGameStarted, setIsGameStarted] = useState(false);
+
+	const [isGameOver, setIsGameOver] = useState(false);
+
 	useEffect(() => {}, [playersData]);
-
-	socket.on('gameCreated', (data) => {
-		dispatchPlayersData({
-			type: 'SET_INIT_ROOM_DATA',
-			payload: { ...data.roomData },
-		});
-	});
-
-	socket.once('gameJoined', (data) => {
-		console.log(data);
-		dispatchPlayersData({
-			type: 'PLAYER_JOINED',
-			payload: { ...data.roomData },
-		});
-	});
-
-	socket.once('toggleIsShipVertical', ({ playersData }) => {
-		const { gameId, player1, player2 } = playersData;
-		dispatchPlayersData({
-			type: 'TOGGLE_IS_SHIP_VERTICAL',
-			payload: { gameId, player1, player2 },
-		});
-	});
-
-	socket.once('toggleIsEditModeOn', ({ playersData }) => {
-		const { gameId, player1, player2 } = playersData;
-		dispatchPlayersData({
-			type: 'TOGGLE_IS_EDIT_MODE_ON',
-			payload: { gameId, player1, player2 },
-		});
-	});
-
-	socket.once('clickOnAShipInLegend', ({ playersData }) => {
-		const { gameId, player1, player2 } = playersData;
-		dispatchPlayersData({
-			type: 'CLICK_ON_A_SHIP_IN_LEGEND',
-			payload: { gameId, player1, player2 },
-		});
-	});
-
-	socket.once('mouseEnterCell', ({ playersData }) => {
-		const { gameId, player1, player2 } = playersData;
-		dispatchPlayersData({
-			type: 'MOUSE_ENTER_CELL',
-			payload: { gameId, player1, player2 },
-		});
-	});
-
-	socket.once('mouseLeaveCell', ({ playersData }) => {
-		const { gameId, player1, player2 } = playersData;
-		dispatchPlayersData({
-			type: 'MOUSE_LEAVE_CELL',
-			payload: { gameId, player1, player2 },
-		});
-	});
-	
-
-
-	socket.on('gameCreated', (data) => {
-		//console.log('gameCreated', data);
-		dispatchPlayersData({
-			type: 'gameCreated',
-			payload: data,
-		});
-	});
-	socket.on('gameJoined', (data) => {});
 
 	return (
 		<>
@@ -105,7 +49,7 @@ function ContextWrapper({ children }) {
 					setSettings,
 				}}
 			>
-				<SocketContext.Provider value={socket}>
+				<SocketContext.Provider value={{ socket }}>
 					<PlayersDataContext.Provider
 						value={{
 							playersData,
@@ -114,7 +58,27 @@ function ContextWrapper({ children }) {
 					>
 						<PlayerIdContext.Provider value={{ playerId, setPlayerId }}>
 							<GameIdContext.Provider value={{ gameId, setGameId }}>
-								{children}
+								<IsPlayerReadyContext.Provider
+									value={{
+										isPlayer1Ready,
+										setIsPlayer1Ready,
+										isPlayer2Ready,
+										setIsPlayer2Ready,
+									}}
+								>
+									<IsGameStartedContext.Provider
+										value={{
+											isGameStarted,
+											setIsGameStarted,
+										}}
+									>
+										<IsGameOverContext.Provider
+											value={{ isGameOver, setIsGameOver }}
+										>
+											{children}
+										</IsGameOverContext.Provider>
+									</IsGameStartedContext.Provider>
+								</IsPlayerReadyContext.Provider>
 							</GameIdContext.Provider>
 						</PlayerIdContext.Provider>
 					</PlayersDataContext.Provider>

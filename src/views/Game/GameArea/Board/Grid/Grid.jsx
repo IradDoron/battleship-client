@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Cell from './Cell/Cell';
 
 // import contexts
-import PlayersDataContext from '../../../../contexts/PlayersDataContext';
+import PlayersDataContext from '../../../../../contexts/PlayersDataContext';
 
 const StyledGrid = styled.div`
 	display: inline-grid;

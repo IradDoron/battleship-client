@@ -1,41 +1,41 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
+import { EFFECTS, PALETTE } from '../../../../../constants/STYLES';
 
 // import contexts
-import GameIdContext from '../../../../contexts/GameIdContext';
-import PlayerIdContext from '../../../../contexts/PlayerIdContext';
-import PlayersDataContext from '../../../../contexts/PlayersDataContext';
-import SocketContext from '../../../../contexts/SocketContext';
+import GameIdContext from '../../../../../contexts/GameIdContext';
+import PlayersDataContext from '../../../../../contexts/PlayersDataContext';
+import SocketContext from '../../../../../contexts/SocketContext';
+
 
 const StyledLegendCell = styled.div`
 	width: 20px;
 	height: 20px;
 	border: solid black;
-	background-color: ${(props) => (props.isPlaced ? 'grey' : 'salmon')};
+	background-color: ${(props) => (props.isPlaced ? 'grey' : PALETTE.LIGHT_YELLOW)};
 `;
 
 const StyledLegendShip = styled.div`
-	border-style: solid;
-	border-color: ${(props) => (props.isSelected ? 'red' : 'black')};
+	
+	box-shadow: ${(props) => (props.isSelected ? EFFECTS.boxShadow.basic : '')};
 	display: flex;
 	cursor: ${(props) => (props.isPlaced ? 'not-allowed' : 'pointer')};
+	padding: 8px ;
+	border-radius: 6px;
 `;
 
 const StyledLegend = styled.div``;
 
 function Legend({ boardId }) {
 	const { playersData } = useContext(PlayersDataContext);
-	const { playerId } = useContext(PlayerIdContext);
 	const { gameId } = useContext(GameIdContext);
-	const socket = useContext(SocketContext);
+	const { socket } = useContext(SocketContext);
+	
 
 	const legend = playersData[boardId]?.legend;
-	const isShipVertical = playersData[boardId]?.isShipVertical;
 	const isEditModeOn = playersData[boardId]?.isEditModeOn;
 
 	function handleClickShip(index) {
-		console.log(playersData[playerId].currLegendIndex === index);
-
 		if (isEditModeOn) {
 			socket.emit('clickOnAShipInLegend', {
 				boardId,
@@ -45,18 +45,9 @@ function Legend({ boardId }) {
 		}
 	}
 
-	function handleClickToggleIsShipVertical() {
-		socket.emit('toggleIsShipVertical', { gameId, boardId });
-		console.log('emit toggleIsShipVertical');
-	}
-
-	function handleClickToggleIsEditModeOn() {
-		socket.emit('toggleIsEditModeOn', { gameId, boardId });
-	}
 
 	return (
 		<>
-			<h1>Legend</h1>
 			<StyledLegend>
 				{legend.map((legendShip, shipIndex) => {
 					const shipSize = legendShip.size;
@@ -80,12 +71,8 @@ function Legend({ boardId }) {
 					);
 				})}
 			</StyledLegend>
-			<button onClick={handleClickToggleIsShipVertical}>
-				{isShipVertical ? 'vertical' : 'horizontal'}
-			</button>
-			<button onClick={handleClickToggleIsEditModeOn}>
-				{isEditModeOn ? 'edit mode on' : 'edit mode off'}
-			</button>
+
+	
 		</>
 	);
 }

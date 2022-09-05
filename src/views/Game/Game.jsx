@@ -1,16 +1,31 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import MainHeader from '../../components/MainHeader/MainHeader';
 import PlayersDataContext from '../../contexts/PlayersDataContext';
 import GameArea from './GameArea/GameArea';
 
+import IsGameOverContext from '../../contexts/IsGameOverContext';
+
 function Game() {
 	const { playersData } = useContext(PlayersDataContext);
+	const { isGameOver } = useContext(IsGameOverContext);
+
+	// instead of using the regular useState syntax, we use the destructuring syntax
+	const setWinner = useState(null)[1];
+
+	useEffect(() => {
+		if (isGameOver) {
+			if (playersData.player1.isWinner) {
+				setWinner(playersData.player1.name);
+			}
+		}
+	}, [isGameOver, playersData, setWinner]);
 
 	return (
 		<>
-			<h1>Game view</h1>
-			<h2>Game id: {playersData?.gameId}</h2>
-			<h2>Player 1: {playersData?.player1?.name}</h2>
-			<h2>Player 2: {playersData?.player2?.name}</h2>
+			{/* {winner && <h2>{winner} is the winner</h2>} */}
+
+			<MainHeader />
+
 			{playersData && <GameArea />}
 		</>
 	);
