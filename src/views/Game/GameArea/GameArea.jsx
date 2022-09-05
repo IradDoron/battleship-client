@@ -50,7 +50,6 @@ function GameArea() {
 		}
 	}
 
-	console.log(isGameStarted)
 	return (
 		<>
 			<GameAreaWrapper>

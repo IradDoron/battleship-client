@@ -57,8 +57,6 @@ function Welcome() {
 
 	function handleNameChange(e) {
 		setUserName(e.target.value);
-
-		console.log('userName', userName);
 	}
 
 	function handleClickCreateGame(bool) {
