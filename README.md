@@ -1,1 +1,1 @@
-deploy at netlify
+deploy at netlify at url: https://battleship-irad.netlify.app
